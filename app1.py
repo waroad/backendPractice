@@ -22,7 +22,7 @@ def index():
         list1.append([dict_t['adr'], dict_t['content'], datetime.utcnow()])
         socketio.emit('my_response', {'data': request.get_json()['content'], 'node': request.get_json()['adr'],
                                       'time': str(datetime.utcnow())})
-    return render_template('index.html', async_mode=socketio.async_mode)
+    return render_template('index1.html', async_mode=socketio.async_mode)
 
 
 # @socketio.event

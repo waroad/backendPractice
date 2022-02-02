@@ -19,6 +19,7 @@ def index():
 @app.route('/delete/<int:id>')
 def delete(id):
     list1.pop(id)
+    return redirect('/')
 
 
 @app.route('/update/<int:id>', methods=['POST', 'GET'])

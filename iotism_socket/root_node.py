@@ -1,7 +1,20 @@
 # 루트 노드로써, 필요한 데이터가 다 올때까지 기다리다가 다 도착하면 FINISH 와 함께 받은 데이터들을 출력하고,
 # 다음 데이터를 또 받기 위해 가지고 있는 데이터 dict 를 다시 초기화해준다.
+import json
 import socket
 from ast import literal_eval
+import requests
+
+
+def send_api(body):
+    API_HOST = "http://127.0.0.1:5000/"
+    url = API_HOST
+    body = body
+    try:
+        headers = {'Content-Type': 'application/json', 'charset': 'UTF-8', 'Accept': '*/*'}
+        requests.post(url, headers=headers, data=json.dumps(body, ensure_ascii=False, indent="\t"))
+    except Exception as ex:
+        print(ex)
 
 
 def root_node(self_adr, child_num):
@@ -21,8 +34,7 @@ def root_node(self_adr, child_num):
                 for lists in existed.values():
                     for i in lists:
                         merged_data.append(i)
-
-                sock.sendto(str(merged_data).encode('utf-8'), ('127.0.0.1', 5000))
+                send_api({"content":merged_data,"adr":self_adr})
                 # print("----:최상단 루트노드 {}, 수신 완료. 데이터: {}----".format(self_adr, merged_data))
                 received_child_cnt = 0
                 existed = {}
